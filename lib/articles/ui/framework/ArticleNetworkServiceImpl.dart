@@ -1,6 +1,5 @@
  import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_laravel/articles/business/model/categorie.dart';
 import 'package:flutter_laravel/articles/business/service/articlesNetworkservice.dart';
