@@ -15,6 +15,7 @@ class ArticleNetworkServiceImpl implements ArticlesNetworkService{
         headers: {"Authorization": "Bearer $token"});
     var reponseList=json.decode(res.body) as List;
     print("responseMap $reponseList");
+    await Future.delayed(Duration(seconds: 3));
     var responseFinal= reponseList.map((e)=> Categorie.fromJson(e) ).toList();
     return responseFinal;
   }
