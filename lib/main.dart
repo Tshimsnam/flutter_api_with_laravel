@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_laravel/articles/business/interactor/ArticleInteractor.dart';
+import 'package:flutter_laravel/articles/ui/framework/ArticleNetworkServiceImpl.dart';
+import 'package:flutter_laravel/user/business/interactor/UserInteractor.dart';
+import 'package:flutter_laravel/user/ui/framework/UserLocalServiceImpl.dart';
+import 'package:flutter_laravel/user/ui/framework/UserNetworkServiceImpl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'articles/ui/pages/categories/CategoriesPage.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
   await GetStorage.init();
-  runApp(const MyApp());
+  var stockage=GetStorage();
+  // instantier les implementations
+  var articleNetworkImpl=ArticleNetworkServiceImpl();
+  var userNetworkImpl=UserNetworkServiceImpl();
+  var userLocalImpl=UserLocalServiceImpl(stockage);
+
+  // instantier les interactors
+  var articleInteractor=ArticleInteractor.build(articleNetworkImpl, userLocalImpl);
+  var userInteractor=UserInteractor.build(userNetworkImpl, userLocalImpl);
+
+  runApp(ProviderScope(
+      overrides: [
+        articleInteractorProvider.overrideWithValue(articleInteractor),
+        userInteractorProvider.overrideWithValue(userInteractor),
+      ],
+      child: MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +59,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CategoriesPage()
     );
   }
 }
