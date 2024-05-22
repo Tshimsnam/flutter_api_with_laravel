@@ -9,7 +9,8 @@ class UserLocalServiceImpl implements UserLocalService{
 
   @override
   Future<String> getToken() {
-   var data= stockage.read("TOKEN")??"";
+   var data= stockage.read("TOKEN")??"1|KE0ezAjUzFrRbvBVHvIl9VSshhiHPVtqqJKwHQhO738b167d";
+   print("data token: $data");
    return Future.value(data);
   }
 
