@@ -23,7 +23,7 @@ class ArticleNetworkServiceImpl implements ArticlesNetworkService{
 
 void main() async {
  await dotenv.load(fileName: ".env");
-  var token="1|KE0ezAjUzFrRbvBVHvIl9VSshhiHPVtqqJKwHQhO738b167d";
+  var token="6|fa6pxntlrUBd75pB7AvkRZyrfqsFuzOZvkLvPdQO8f77ab77";
   var serviceImpl=ArticleNetworkServiceImpl();
   var res= await serviceImpl.getListCategories(token);
   res.forEach((v){
